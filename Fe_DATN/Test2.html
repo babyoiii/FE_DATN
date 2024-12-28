@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMC Theatres</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --amc-red: #E21B23;
+            --amc-dark: #0A0A0A;
+        }
+
+        body {
+            background-color: var(--amc-dark);
+        }
+
+        .amc-nav {
+            background-color: var(--amc-dark);
+        }
+
+        .search-input {
+            background-color: #333333;
+            border: none;
+        }
+
+        .custom-hover:hover {
+            color: #00ABEE;
+        }
+        .text-custom {
+        color: #00ABEE;
+    }
+        .top-nav {
+            border-bottom: 1px solid #333333;
+            padding-top: 10px;
+            padding-bottom: 0px;
+        }
+
+        .bottom-nav {
+            border-bottom: 1px solid #333333;
+        }
+
+        .border-nav {
+            border-top: 1px solid #333333;
+            padding-top: 15px;
+        }
+
+        .nav-divider {
+            border-color: #333333;
+        }
+
+        .main-nav-link {
+            position: relative;
+            text-decoration: none;
+            font-family: 'Segoe UI', sans-serif;
+            height: 160%;
+            display: flex;
+            align-items: center;
+
+        }
+
+        .main-nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #00abee;
+            ;
+        }
+
+        .main-nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-container {
+            max-width: 1248px;
+            padding-left: 0px;
+            padding-right: 0px;
+            margin: 0 auto;
+        }
+
+        .amc-logo {
+            height: 32px;
+        }
+
+        .showtime-icon {
+            font-size: 24px;
+        }
+
+        .profile-icon {
+            font-size: 24px;
+        }
+
+        .vertical-divider {
+            width: 1.2px;
+            height: 28px;
+            background-color: #333333;
+            margin: 0 6px;
+        }
+
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* DropDown */
+        .movie-dropdown {
+            display: none;
+            position: absolute;
+            top: 120%;
+            z-index: 20;
+        }
+
+        /* Chèn lên menu */
+        .movie-dropdown::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+            z-index: -1;
+        }
+
+        .movie-link {
+            position: relative;
+            height: 100%;
+        }
+
+        .movie-link:hover .movie-dropdown {
+            display: block;
+        }
+
+        .movie-content {
+            max-width: 1248px;
+            margin: 0 auto;
+            padding: 1.5rem 80px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            min-height: 400px;
+        }
+
+        .movie-section {
+            padding: 1rem 0;
+
+        }
+
+        .movie-section h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .movie-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .movie-section li {
+            margin-bottom: 8px;
+        }
+
+        .movie-section a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .movie-section a:hover {
+            color: #00ABEE;
+        }
+
+        /* Icon Footer */
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .icon {
+            width: 5rem;
+            height: 5rem;
+            background-color: #0c0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            border-radius: 50%;
+        }
+
+        .icon:hover>i {
+            scale: 1.2;
+            color: #f1f1f1;
+        }
+
+        .icon::before {
+            background: var(--color);
+            content: "";
+            position: absolute;
+            width: 130%;
+            height: 130%;
+            left: -110%;
+            top: 80%;
+            transform: rotate(45deg);
+        }
+
+        .icon:hover::before {
+            animation: slide 0.7s forwards;
+        }
+
+        @keyframes slide {
+            50% {
+                left: 10%;
+                top: -40%;
+            }
+
+            100% {
+                left: -25%;
+                top: -65%;
+            }
+        }
+
+        /* Màu cho từng icon */
+        .instagram {
+            --color: #E4405F;
+        }
+
+        .linkedin {
+            --color: #0077B5;
+        }
+
+        .youtube {
+            --color: #CD201F;
+        }
+
+        .twitter {
+            --color: #1DA1F2;
+        }
+
+        .github {
+            --color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="amc-nav">
+        <!-- Top Navigation -->
+        <div class="top-nav flex items-center justify-between py-1 nav-container">
+            <div class="flex items-center h-11">
+                <!-- AMC Logo -->
+                <a href="#" class="mr-8">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/AMC_Theatres_logo.svg/1280px-AMC_Theatres_logo.svg.png"
+                        alt="AMC Logo" class="amc-logo">
+                </a>
+
+                <!-- Main Menu Items -->
+                <nav class="flex items-center space-x-8 ">
+                    <a href="#" class="main-nav-link text-white custom-hover text-l">See a Movie</a>
+                    <a href="#" class="main-nav-link text-white custom-hover text-l ">Find a Theatre</a>
+                    <a href="#" class="main-nav-link text-white custom-hover text-l ">Food & Drinks</a>
+                    <a href="#" class="main-nav-link text-white custom-hover text-l ">More<i
+                            class="bi bi-chevron-down ml-1"></i></a>
+                </nav>
+            </div>
+            <div class="flex items-center pb-1.5">
+                <!-- Search -->
+                <div class="relative mr-4">
+                    <input type="text" placeholder="Search"
+                        class="search-input px-4 py-1 rounded text-white text-sm w-64">
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2">
+                        <i class="bi bi-search text-gray-400"></i>
+                    </button>
+                </div>
+
+                <div class="nav-group">
+                    <div class="vertical-divider"></div>
+                    <!-- Showtimes -->
+                    <div class="flex items-center">
+                        <a href="#" class="flex items-center text-white">
+                            <svg fill="currentColor" viewBox="0 0 45 45" width="40" height="40" class="mr-2">
+                                <path
+                                    d="M15.957 33.601a.648.648 0 0 0 .451-.197l8.845-8.817a.648.648 0 0 0 0-.901l-8.45-8.451a.648.648 0 0 0-.902 0l-8.873 8.789a.648.648 0 0 0 0 .901l8.45 8.451a.648.648 0 0 0 .48.225zm.226-17.07 7.605 7.606-7.83 7.915-7.606-7.606zm4.93-1.493a.704.704 0 0 0 .506-1.211l-.957-.958a.717.717 0 0 0-1.014 1.014l.957.958a.704.704 0 0 0 .507.197zm5.774 5.803a.704.704 0 0 0 .563-1.183l-1.014-1.014a.717.717 0 1 0-1.014 1.014l.958.957a.704.704 0 0 0 .507.226zm-2.873-2.902a.704.704 0 0 0 .62-1.098l-1.1-1.099a.748.748 0 1 0-1.013 1.099l.986.901a.704.704 0 0 0 .507.197zm12.93 11.212a.704.704 0 0 0-.705.704v1.352a.718.718 0 0 0 1.437 0v-1.352a.704.704 0 0 0-.732-.704zm0 4.084a.704.704 0 0 0-.705.704v1.353a.718.718 0 1 0 1.437 0v-1.353a.704.704 0 0 0-.732-.704zm0-8.197a.704.704 0 0 0-.705.704v1.38a.718.718 0 1 0 1.437 0V25.77a.704.704 0 0 0-.732-.732z">
+                                </path>
+                                <path
+                                    d="M44.352 28.108A.648.648 0 0 0 45 27.46v-6.197a.648.648 0 0 0-.648-.648H33.986l1.915-1.971a.648.648 0 0 0 0-.902l-3.774-3.86-.507-.506a.648.648 0 0 0-.902 0 2.59 2.59 0 1 1-3.662-3.662.648.648 0 0 0 0-.902L22.69 4.446a.648.648 0 0 0-.873 0L.182 26.08a.648.648 0 0 0 0 .902l4.367 4.366a.648.648 0 0 0 .901 0 2.57 2.57 0 1 1 3.634 3.634.648.648 0 0 0 0 .901l4.282 4.366a.62.62 0 0 0 .394.17v.281h30.592a.648.648 0 0 0 .648-.648v-6.31a.648.648 0 0 0-.648-.507 2.563 2.563 0 0 1 0-5.127zm-33.944 7.296a3.86 3.86 0 0 0-5.493-5.38l-3.38-3.493 15.38-15.324.789.732a.717.717 0 1 0 1.014-1.014l-.789-.789 4.31-4.338L25.76 9.32a3.86 3.86 0 0 0 5.352 5.353l3.409 3.408-4.254 4.395-.957-.958a.717.717 0 1 0-1.014 1.014l.957.958-15.352 15.408zm9.211-.394 9.043-9.042h3.324v10.084H19.619v-1.07zm24.17-.535v4.901h-6.113v-1.324a.718.718 0 0 0-1.437 0v1.324H15.197l3.127-3.099v.282a.648.648 0 0 0 .647.648h13.634a.648.648 0 0 0 .648-.648V25.291a.648.648 0 0 0-.648-.647h-2.647l2.816-2.817h3.522v1.21a.718.718 0 0 0 1.436 0v-1.126h6.057v4.958a3.86 3.86 0 0 0 0 7.577z">
+                                </path>
+                            </svg>
+                            <span class="text-l font-semibold">Showtimes</span>
+                        </a>
+                    </div>
+
+                    <div class="vertical-divider"></div>
+
+                    <!-- AMC Stubs -->
+                    <div class="flex items-center main-nav-link">
+                        <i class="bi bi-person-circle text-white profile-icon"></i>
+                        <div class="flex flex-col ml-2">
+                            <span class="text-white text-xs font-bold">AMC STUBS</span>
+                            <div class="flex items-center">
+                                <button class="text-white custom-hover text-sm underline">Sign In</button>
+                                <span class="mx-1 text-gray-500">or</span>
+                                <button class="text-white custom-hover text-sm underline">Join Now</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav flex items-center justify-between py-2 nav-container">
+            <div class="flex items-center group cursor-pointer">
+                <i class="bi bi-geo-alt text-white mr-2"></i>
+                <span class="text-custom group-hover:text-white text-sm transition-colors duration-200">Find a
+                    Theatre Near You</span>
+            </div>
+
+            <div class="flex items-center space-x-8 text-sm ">
+                <a href="#" class="text-white custom-hover">Merchandise</a>
+                <a href="#" class="text-white custom-hover">Gift Cards</a>
+                <a href="#" class="text-white custom-hover">Offers</a>
+                <a href="#" class="text-white custom-hover">Discounts</a>
+                <a href="#" class="text-white custom-hover">On Demand</a>
+            </div>
+        </div>
+    </header>
+    <div>
+
+    </div>
+    <footer class="amc-nav pt-12 pb-8">
+        <!-- Social Icons -->
+        <div class="wrapper mb-8"
+            style="margin-bottom: 0px; border-bottom: 2px solid #6d6d6d; border-top: 2px solid #6d6d6d; padding: 18px ;">
+            <a href="https://www.instagram.com/" class="icon instagram" style="color: white;" target="_blank">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com/" class="icon linkedin" style="color: white;" target="_blank">
+                <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://www.youtube.com/" class="icon youtube" style="color: white;" target="_blank">
+                <i class="bi bi-youtube"></i>
+            </a>
+            <a href="https://x.com/" class="icon twitter" style="color: white;" target="_blank">
+                <i class="bi bi-twitter-x"></i>
+            </a>
+            <a href="https://github.com/" class="icon github" style="color: white;" target="_blank">
+                <i class="bi bi-github"></i>
+            </a>
+        </div>
+
+        <!-- Main Footer Content -->
+        <div style=" background-color: #131618; padding-top: 50px;">
+            <div>
+                <div class="grid grid-cols-4 gap-8"
+                    style="max-width: 1440px; padding-left: 80px; padding-right: 80px; margin: 0 auto; padding-bottom: 50px;">
+                    <div>
+                        <h3 class="text-white font-bold mb-4">Our Company</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Our Brands</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Contact Us</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">FAQs</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Corporate Information</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">AMC Investor Connect</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Investor Relations</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Media Center</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold mb-4">Movies</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Movies</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Theatres</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Ratings Information</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">IMAX at AMC</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Dolby Cinema at AMC</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">PRIME at AMC</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">RealD 3D</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">BigD at AMC</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold mb-4">Programming</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Private Theatre Rentals</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">AMC Artisan Films</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">AMC Thrills & Chills</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Fan Faves</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">International Films</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Film Festivals</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Special Events</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold mb-4">More</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">AMC Stubs</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Offers & Promotions</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Gift Cards</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Movie Merchandise</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">NFTs from AMC</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">Mobile App</a></li>
+                            <li><a href="#" class="text-gray-400 custom-hover text-sm">AMC Scene</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Footer Logo -->
+                <div class="pb-6 pt-4" style="border-top: 2px solid #414141">
+                    <div style="max-width: 1440px; padding-left: 80px; padding-right: 80px; margin: 0 auto;">
+                        <div
+                            class="text-white mx-auto px-0 flex flex-col items-center justify-start gap-y-4 lg:flex-row">
+                            <div class="order-2 text-center text-xs lg:order-1 lg:w-3/12 lg:text-left lg:text-sm">©
+                                Copyright <!-- -->2024<!-- --> AMC Theatres</div>
+                            <div class="order-1 text-center lg:order-2 lg:w-1/2">
+                                <a class="inline-flex text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-white hocus:text-blue-500 p-2 text-sm md:text-base"
+                                    aria-label="Our Brands" href="#"><svg xmlns="http://www.w3.org/2000/svg"
+                                        xml:space="preserve" style="enable-background:new 0 0 954.33 150.97"
+                                        viewBox="0 0 954.33 150.97" width="303" height="48" class="h-12 w-auto">
+                                        <path
+                                            d="M411.53 15.21v56.57h-14.05V15.21h-20.7V3.5h54.71v11.71h-19.96zM485.94 71.78V40.87h-27.07v30.91h-14.05V3.5h14.05v25.66h27.07V3.5h14.05v68.28h-14.05zM514.55 71.78V3.5H564v11.71h-35.41v15.54h32.7v11.71h-32.7v17.61h37.01v11.71h-51.05zM624.07 71.78l-4.69-13.68H594.1l-4.79 13.68h-14.32L598.77 3.5h16.21l23.42 68.28h-14.33zm-17.14-51.89-8.43 26.5h17.51l-9.08-26.5zM669.54 15.21v56.57h-14.06V15.21h-20.69V3.5h54.7v11.71h-19.95zM743.43 71.78c-1.11-2.06-1.68-4.12-1.87-6.36-.19-3.39 0-8.8 0-13.78 0-4.59-3.56-6.84-8.43-6.84h-16.48v26.97h-14.06V3.5h37.95c6.83 0 13.67 3.46 15.74 10.87.83 2.99 2.34 7.86.65 13.75-1.68 5.92-4.68 8.07-9.27 10.78 2.34 1.59 6.84 3.28 7.59 9.46.38 2.8.65 11.81.65 15.27.08 3.84 1.13 4.69 2.62 5.62v2.52h-15.09zm-7.77-56.57h-19.01v17.88h19.2c3.28 0 9.18-3.46 8.33-10.2 0-4.88-2.24-7.68-8.52-7.68zM770.03 71.78V3.5h49.45v11.71h-35.4v15.54h32.7v11.71h-32.7v17.61h36.99v11.71h-51.04zM870.48 24.29c.19-5.54-4.4-10.6-14.06-10.77-6.84-.1-11.89 2.24-12.36 7.85-.38 4.69 1.22 5.63 4.31 6.85 1.59 1.68 14.51 3.74 17.15 4.22 3.74.64 11.8 2.34 16.1 6.74 7.87 8.25 4.22 24.45-4.31 29.99-5.81 3.74-13.77 4.68-21.36 4.77-3.46.09-11.71-1.12-16.76-4.77-6.09-4.41-9.09-11.16-9.56-17.62h13.69c0 1.78.55 4.59 2.89 7.12 3.09 3.19 8.15 4.12 12.83 3.94 4.68-.09 9.09-1.5 10.88-3.19 2.99-2.8 3.65-8.16.27-11.52-4.49-4.69-17.98-4.69-26.79-7.68-7.39-2.52-13.48-7.87-12.36-18.92 1.13-10.87 9-18.93 25.68-18.93 3.65 0 16.39.29 23.03 8.72 3.56 4.59 4.5 10.96 3.93 13.22h-13.2zM220.62 11.08c13.7-11.6 28.06-11.37 40.28-5.34 11.36 5.99 15.43 14.6 15.61 27.18l-.01 30.85s-.11 8.71-9.04 8.71c-8.48 0-8.88-8.65-8.88-8.65l-.12-30.49s-.52-14.16-14.68-14.16c-14.23 0-15.37 14.09-15.37 14.09v30.01s0 9.08-9.01 9.08c-8.8 0-8.99-9.08-8.99-9.08l-.01-29.92s-.27-14.18-15.32-14.18c-14.98 0-14.59 14.38-14.59 14.38v30.77s-1.05 8.1-8.95 8.1c-8.19 0-9.01-8.17-9.01-8.17l-.06-31.06c0-11.45 2.22-22.81 18.5-29.25 7.4-2.92 16.09-2.86 23.88-1.09 5.19 1.88 9.68 4.43 14.05 8.2l.82.72.9-.7zM133.72 63.59c0-8.92-8.85-8.95-8.85-8.95h-31.9c-1.89 0-2.11-1.45-1.65-3.13 3.89-9.68 12.53-20.51 21.77-25.25 7.64-3.9 16.41-7.97 25.5-7.37 1.89.14 1.89 1.03 1.91 4.01v40.26s.46 9.14 9.31 9.14c9.11 0 8.39-8.84 8.39-8.84l-.04-50.56c.12-3.07-.44-6.02-2.27-8.38-1.36-1.24-3.18-2.54-5.25-2.83-10.86-.89-21.29.09-31.27 3.01-18.54 5.4-36.25 20.45-45.33 38.36-3.1 6.1-5.96 14.1-6.08 21.48.12 3.54 1.6 7.67 5.64 7.67l51.43.26c-.01.02 8.69.35 8.69-8.88zM346.42 41.68c9 .94 7.88 9.39 7.88 9.39-4.86 15.28-19.17 24.63-36.07 24.63-20.9 0-37.84-16.95-37.84-37.85C280.38 16.95 297.33 0 318.23 0c16.97 0 31.33 8.28 36.13 23.67 0 0 2.29 9.26-7.67 10.42-7.37 0-8.51-6.01-8.51-6.01-2.86-8.26-10.69-11.3-19.91-11.3-11.64 0-21.07 9.44-21.07 21.06 0 11.64 9.43 21.07 21.07 21.07 9.11 0 16.87-4.05 19.81-12.14-.01 0 1.8-5.24 8.34-5.09zM883.28 69.73c0-2.01 1.63-3.64 3.66-3.64a3.64 3.64 0 0 1 3.64 3.64c0 2.03-1.63 3.66-3.64 3.66-2.03 0-3.66-1.63-3.66-3.66zm6.87 0c0-1.77-1.44-3.2-3.2-3.2-1.78 0-3.21 1.43-3.21 3.2 0 1.79 1.43 3.22 3.21 3.22 1.76 0 3.2-1.43 3.2-3.22zm-1.39 2.05h-.6L887 69.89h-.92v1.89h-.5V67.7h1.78c.35 0 .69.02.99.2.31.17.46.53.46.88 0 .81-.56 1.1-1.29 1.12l1.24 1.88zm-1.92-2.28c.58 0 1.47.1 1.47-.74 0-.63-.56-.7-1.06-.7h-1.17v1.44h.76z"
+                                            style="fill: #ce0e2d"></path>
+                                        <path
+                                            d="M948.21 120.97h-1.59v3.15h-1.36v-3.15h-1.59v-1.09h4.53v1.09zm6.12-1.09v4.23h-1.31v-2.55l-1.47 1.97h-.04l-1.45-1.97v2.55h-1.33v-4.23h1.41l1.39 1.92 1.41-1.92h1.39zM51.49 119.31l-11.24 30.73h-5.44l-9.04-24.8-9.09 24.8h-5.4L0 119.31h5.62l8.47 24.58 9.13-24.58h5.18l9.09 24.58 8.52-24.58h5.48zM98.3 145.43v4.61H67.7v-30.73h30.16v4.61H72.92v8.21H93.9v4.61H72.92v8.69H98.3zM179.34 119.31v30.73h-5.27v-23.57l-14.62 17.74h-.31l-14.62-17.74v23.57h-5.09v-30.73h5.71l14.27 17.6 14.27-17.6h5.66zM223.33 142.62h-19.71l-3.91 7.42H194l16.64-30.73h5.79l16.59 30.73h-5.75l-3.94-7.42zm-2.33-4.47-7.51-14.22-7.51 14.22H221zM275.49 150.04l-13.3-15.54-9.17 7.42v8.12h-5.27v-30.73h5.27v16.86l20.9-16.86h7.11l-14.84 12.12 15.76 18.61h-6.46zM327.86 145.43v4.61h-30.6v-30.73h30.16v4.61h-24.94v8.21h20.98v4.61h-20.98v8.69h25.38zM409.78 119.31v30.73h-5.27v-23.57L389.9 144.2h-.31l-14.62-17.74v23.57h-5.09V119.3h5.71l14.27 17.6 14.27-17.6h5.65zM424.8 134.68c0-10.14 7.29-16.29 19.1-16.29s19.1 6.15 19.1 16.29c0 10.14-7.29 16.29-19.1 16.29s-19.1-6.15-19.1-16.29zm32.79 0c0-7.46-5.36-11.63-13.7-11.63s-13.74 4.17-13.74 11.63 5.36 11.63 13.74 11.63c8.35 0 13.7-4.17 13.7-11.63zM480.78 119.31l12.95 25.33 12.95-25.33h5.75l-15.94 30.73h-5.62l-15.94-30.73h5.85zM528.02 150.04v-30.73h5.27v30.73h-5.27zM582.81 145.43v4.61h-30.6v-30.73h30.16v4.61h-24.94v8.21h20.98v4.61h-20.98v8.69h25.38zM631.76 140.96c0 5.84-5.75 10.01-16.2 10.01-7.2 0-13.57-2.11-18.35-6.23l3.29-3.73c4.17 3.73 9.09 5.4 15.28 5.4 6.85 0 10.62-1.8 10.62-5 0-3.16-3.86-3.99-11.59-4.65-8.47-.7-16.46-2.59-16.46-8.87 0-6.1 7.07-9.48 15.89-9.48 6.67 0 12.34 1.98 16.02 5.09l-3.34 3.6c-3.16-2.77-7.51-4.08-12.6-4.13-4.87-.04-10.67 1.14-10.67 4.57 0 3.25 5.14 3.82 11.85 4.35 9.58.73 16.26 2.66 16.26 9.07zM705.43 141.61c0 5.53-4.52 8.43-11.76 8.43h-22.04v-30.73h20.76c6.76 0 11.28 2.77 11.28 7.81 0 3.51-2.15 6.67-6.67 6.98 4.78.32 8.43 2.51 8.43 7.51zm-28.63-9.35h14.75c4.13 0 6.89-.92 6.89-4.3s-2.77-4.26-6.89-4.26H676.8v8.56zm23.23 8.83c0-3.47-2.77-4.57-7.38-4.57H676.8v9.13h15.85c4.61 0 7.38-1.09 7.38-4.56zM752.71 145.43v4.61h-30.6v-30.73h30.16v4.61h-24.94v8.21h20.98v4.61h-20.98v8.69h25.38zM799.55 123.92h-14v26.12h-5.27v-26.12h-13.92v-4.61h33.19v4.61zM845.91 123.92h-14v26.12h-5.27v-26.12h-13.92v-4.61h33.19v4.61zM892.58 145.43v4.61h-30.6v-30.73h30.16v4.61H867.2v8.21h20.98v4.61H867.2v8.69h25.38zM935.12 150.04l-9.53-11.15h-12.95v11.15h-5.27v-30.73h20.9c7.16 0 12.42 3.42 12.42 9.79 0 5.31-3.69 8.56-9.04 9.53l9.96 11.41h-6.49zm-7.2-15.67c4.39 0 7.38-1.41 7.38-5.22s-2.99-5.22-7.38-5.22H912.6v10.45h15.32z"
+                                            style="fill: #fff"></path>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mx-auto px-4 xl:px-0 flex flex-wrap gap-y-4 pt-8 lg:pt-4">
+                            <div class="flex-grow text-xs text-gray-200">This site is protected by reCAPTCHA and the
+                                Google&nbsp;
+                                <a class="group transition-colors text-blue-500 hocus:text-white" target="_blank"
+                                    href="https://policies.google.com/privacy">Privacy Policy
+                                </a>&nbsp;and&nbsp;
+                                <a class="group transition-colors text-blue-500 hocus:text-white" target="_blank"
+                                    href="https://policies.google.com/terms">Terms of Service</a>
+                            </div>
+                            <button type="button"
+                                class="text-center items-center justify-center w-max font-bold transition duration-200 disabled:opacity-40 rounded-full text-blue-500 hocus:text-white md:text-base inline-flex text-xs">
+                                <span>Your Privacy Choices&nbsp;</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
+                                    style="enable-background:new 0 0 30 14" viewBox="0 0 30 14" width="1em"
+                                    height="100%" class="h-full w-8">
+                                    <path d="M7.4 12.8h6.8l3.1-11.6H7.4C4.2 1.2 1.6 3.8 1.6 7s2.6 5.8 5.8 5.8z"
+                                        style="fill-rule:evenodd;clip-rule:evenodd;fill:#fff"></path>
+                                    <path
+                                        d="M22.6 0H7.4c-3.9 0-7 3.1-7 7s3.1 7 7 7h15.2c3.9 0 7-3.1 7-7s-3.2-7-7-7zm-21 7c0-3.2 2.6-5.8 5.8-5.8h9.9l-3.1 11.6H7.4c-3.2 0-5.8-2.6-5.8-5.8z"
+                                        style="fill-rule:evenodd;clip-rule:evenodd;fill:#06f"></path>
+                                    <path
+                                        d="M24.6 4c.2.2.2.6 0 .8L22.5 7l2.2 2.2c.2.2.2.6 0 .8-.2.2-.6.2-.8 0l-2.2-2.2-2.2 2.2c-.2.2-.6.2-.8 0-.2-.2-.2-.6 0-.8L20.8 7l-2.2-2.2c-.2-.2-.2-.6 0-.8.2-.2.6-.2.8 0l2.2 2.2L23.8 4c.2-.2.6-.2.8 0z"
+                                        style="fill:#fff"></path>
+                                    <path
+                                        d="M12.7 4.1c.2.2.3.6.1.8L8.6 9.8c-.1.1-.2.2-.3.2-.2.1-.5.1-.7-.1L5.4 7.7c-.2-.2-.2-.6 0-.8.2-.2.6-.2.8 0L8 8.6l3.8-4.5c.2-.2.6-.2.9 0z"
+                                        style="fill:#06f"></path>
+                                </svg></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

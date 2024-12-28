@@ -1,0 +1,71 @@
+.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:not(.label,.footnote,.caption,.headline,.copy),.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:not(:has(.copy,.label,.footnote,.caption,.headline)) {
+    line-height: 1.75
+}
+
+.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.copy) {
+    line-height: 1.75
+}
+
+.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.footnote) {
+    line-height: 1.75
+}
+
+.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.label) {
+    line-height: 1.5
+}
+
+.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.caption) {
+    line-height: 1.25
+}
+
+.rich-text:not(.copy,.label,.footnote,.caption,.headline) p:has(.headline) {
+    line-height: 1.25
+}
+
+.rich-text:not([class*=text-]) p:not(:has([class*=text-])) {
+    font-size: var(--font-size-400)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-950) {
+    font-size: var(--font-size-950)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-900) {
+    font-size: var(--font-size-900)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-800) {
+    font-size: var(--font-size-800)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-700) {
+    font-size: var(--font-size-700)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-600) {
+    font-size: var(--font-size-600)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-500) {
+    font-size: var(--font-size-500)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-400) {
+    font-size: var(--font-size-400)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-300) {
+    font-size: var(--font-size-300)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-200) {
+    font-size: var(--font-size-200)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-100) {
+    font-size: var(--font-size-100)
+}
+
+.rich-text:not([class*=text-]) p:has(.text-50) {
+    font-size: var(--font-size-50)
+}
